@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="file:Tester.js"></script>
+        <script type="text/javascript" src="file:CanvasHelpScreen.js"></script>
+        <script type="text/javascript" src="file:Now announcing.js"></script>
+        <title>CHS Test Page</title>
+        <!-- STYLES -->
+        <style> 
+            .startBtn {
+                position: absolute;
+                top: 125px;
+                left: 600px;
+            }
+            .theBox {
+                width: 200px;
+                height: 200px;
+                text-align: center;
+                vertical-align: middle;
+                background-color: rgb(100, 100, 159);
+                position: relative;
+                left: 50%;
+                top: 50%;
+                display: table;
+                margin: -100px 0 0 -100px;
+            }
+            .theBox p {
+                margin: 40% 0;
+            }
+            .fixedEl {
+                position: fixed;
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                vertical-align: middle;
+                background-color: rgb(100, 159, 100);
+                display: table;
+                top: 75px;
+                left: 100px;
+            }
+            .fixedEl p {
+                margin: 30% 0;
+            }
+            .absEl {
+                position: absolute;
+                width: 70px;
+                height: 130px;
+                text-align: center;
+                vertical-align: middle;
+                background-color: rgb(159, 100, 100);
+                display: table;
+                top: 300px;
+                left: 275px;
+            }
+            .absEl p {
+                margin: 30% 0;
+            }
+            html {
+                height: 100%;
+            }
+            body {
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body onload="start()">
+        <button class="startBtn" onclick="startHS()">Start!</button>
+        <div class="theBox"><p>This is <br/>the box</p></div>
+        <div class="fixedEl"><p>This is a <br/> fixed element</p></div>
+        <div class="absEl"><p>This is an <br/> absolute element</p></div>
+    </body>
+    <!-- SCRIPTS -->
+    <script type="text/javascript">
+        function start () {
+            tester= new Tester();
+        }
+    </script>
+</html>
