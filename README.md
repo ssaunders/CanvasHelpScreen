@@ -3,6 +3,8 @@ CanvasHelpScreen
 
 Create a (relatively) responsive canvas overlay for your web page. (uses jQuery)
 
+###Documentation
+```
 /* * * ALL ITEM CONFIG OPTIONS * * */
  {                                                   // "|" means "or"
    title       : "Hello",
@@ -39,3 +41,5 @@ Create a (relatively) responsive canvas overlay for your web page. (uses jQuery)
     showCloseButton: false          //Draws the close button. Defaults to false
     closeBtnPos    : {x:#, y:#}     //Overrides showCloseButton
  }
+
+```
