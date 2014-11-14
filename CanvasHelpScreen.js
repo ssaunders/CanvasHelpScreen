@@ -32,6 +32,8 @@ HelpScreen = function(objectList, config) {
         boxShadowColor = this.defaults.defShadowColor, showBoxShadow = false,
         shadowColor = this.defaults.defShadowColor, showShadow = false,
         showCloseButton = false,
+        lineStyle = "straight",
+        lineColor = "black",
         //Internal Vars
         splitChar = '\n',   //Char(s) used to split the text into lines
         lineSpacing = 1.5,
@@ -96,6 +98,12 @@ HelpScreen = function(objectList, config) {
             closeButton.x = config.closeBtnPos.x;
             closeButton.y = config.closeBtnPos.y;
             showCloseButton = true;
+        }
+        if(config.lineStyle !== undefined) {
+            lineStyle = config.lineStyle;
+        }
+        if(config.lineColor !== undefined) {
+            lineColor = config.lineColor;
         }
         
         delete config.titleFont;
@@ -438,7 +446,7 @@ HelpScreen = function(objectList, config) {
     function drawLine(txtConfig) {
             //save state
         var saveStyle = context.fillStyle;
-        context.fillStyle = "black";
+        context.strokeStyle = txtConfig.lineColor || lineColor;
 
         var dotPos = getDotPosition(txtConfig),
             linPos = getLineStartPoint(txtConfig);
@@ -446,8 +454,21 @@ HelpScreen = function(objectList, config) {
         //TODO Add changing line color
         context.beginPath();
         context.moveTo(dotPos.x, dotPos.y);
-        context.lineTo(linPos.x, linPos.y);
+        if(txtConfig.lineStyle !== "swoop" && lineStyle !== "swoop") {
+            context.lineTo(linPos.x, linPos.y);
+        } else {
+            context.fillStyle = txtConfig.lineColor || lineColor;
+            var ctrlPt = {
+                x: ( dotPos.x + linPos.x ) / 2,
+                y: ( dotPos.y + linPos.y ) / 2
+            };
+
+            context.quadraticCurveTo(ctrlPt.x, ctrlPt.y+40, linPos.x, linPos.y);
+            context.quadraticCurveTo(ctrlPt.x, ctrlPt.y+50, dotPos.x, dotPos.y);
+            context.fill();
+        }
         context.stroke();
+
 
         context.fillStyle = saveStyle;
     }
