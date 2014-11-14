@@ -1,80 +1,484 @@
 <!DOCTYPE html>
 <html>
-    <head>
-         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="file:Tester.js"></script>
-        <script type="text/javascript" src="file:CanvasHelpScreen.js"></script>
-        <script type="text/javascript" src="file:Now announcing.js"></script>
-        <title>CHS Test Page</title>
-        <!-- STYLES -->
-        <style> 
-            .startBtn {
-                position: absolute;
-                top: 125px;
-                left: 600px;
+<head>
+    <title>Help Screen Tutorial</title>
+</head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="file:Tester.js"></script>
+    <script type="text/javascript" src="file:CanvasHelpScreen.js"></script>
+    <script>
+        function startTutorial() {
+            // T.start('startTutorial');
+            // T.start('tracker');
+            var halfWidth = $(window).width()/2,
+                halfHeight = $(window).height()/2,
+                fontWeight = 30;
+            var messages = [{
+                title: "Welcome to the Canvas",
+                textPosition: halfWidth+","+(halfHeight-fontWeight*4.2),
+                alignment: 'center'
+            },{
+                title: "Help Screen Tutorial",
+                text: "(click to continue)",
+                textPosition: halfWidth+","+(halfHeight-fontWeight*3),
+                alignment: 'center',
+                boxPad: 0
+            }];
+            console.log("Welcome Screen Config ",messages);     //To show later
+
+            if(typeof(helpOvly) === 'undefined' || helpOvly === null) {
+                helpOvly = new HelpScreen({}, {
+                    titleFont: fontWeight +'pt Arial',
+                    titleColor: 'rgb(120,40,17)',
+                    textFont: "15pt Helvetica",
+                    textColor: 'white',
+                    // shadowColor: 
+                    boxShadowColor: 'rgba(0,170,170,.70)',
+                    showCloseButton: false,
+                    lineStyle:"swoop"
+                });
             }
-            .theBox {
-                width: 200px;
-                height: 200px;
-                text-align: center;
-                vertical-align: middle;
-                background-color: rgb(100, 100, 159);
-                position: relative;
-                left: 50%;
-                top: 50%;
-                display: table;
-                margin: -100px 0 0 -100px;
+            helpOvly.clear();
+            helpOvly.replaceConfig(messages);
+            helpOvly.onClick(one);
+            helpOvly.render();
+            helpOvly.showCanvas();
+
+            // T.end('startTutorial');
+            // T.timeFn("render",helpOvly);
+        }
+
+        function one() {
+            // T.start("one");
+            // T.start('tracker');
+
+            var messages = [{
+                title: "The Canvas Help Screen",
+                text: "With the CHS, programmers can easily show a\n"+
+                        "user the features available in their app. Using \n"+
+                        "simple configs (like the one this help text is\n"+
+                        "pointing at), the CHS creates an overlay\n"+
+                        "directing the user's attention to different areas\n"+
+                        "on the screen, accompanied by helpful text.",
+                textPosition: [1200,100],
+                dotPosition: "1016,329",
+                dotColor: 'green',
+                lineColor: 'green',
+                lineStyle: 'swoop'
+            },{
+                title: "am I here?",
+                textPosition: [40,40],
+                element: 'q'
+            }];
+            console.log("Screen one config ",messages);     //To show later
+
+            helpOvly.clear();
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+            helpOvly.onClick(two);
+
+            // T.end("one");
+        }
+
+        function two() {
+            // T.start("two"); 
+            // T.start('tracker');
+
+            var firstXPos = 1185;
+            var firstYPos = 320;
+            var textSize = 10;
+            var offSet = 3;
+            var spacer = 25;
+            var messages = [{
+                title: "Some Features of the CHS",
+                textPosition: firstXPos+","+firstYPos,
+            },{
+                title: "Header Text",
+                text: "Can be different from the body text.",
+                textPosition: (firstXPos+70)+","+(firstYPos+spacer*offSet++),
+                dotPosition: '1155,365'
+            }];
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+
+            console.log("Screen two config 1 ",messages);   //To show later
+            
+            offSet += 4;
+            firstXPos += 50
+            // T.mark("two", "before drawObject");
+            helpOvly.drawObject({
+                title: "Changing Fonts and Colors",
+                titleFont: '20pt Courier',
+                titleColor: '#FFD600',
+                text: "Both title and text can be different",
+                textFont: '19pt Lucida Grande',
+                textColor: 'rgb(244,55,67)',
+                textPosition: firstXPos+","+(firstYPos+spacer*offSet++),
+                dotPosition: '1199,503'
+            });
+            // T.mark("two", "after drawObject");
+
+            offSet += 4;
+            messages = [{
+                title: "You can have just a title",
+                textPosition: firstXPos-75+","+(firstYPos-25+spacer*++offSet),
+                dotPosition: '1220,730'
+            },{
+                text: "Or you can have just text",
+                textPosition: firstXPos-135+","+(firstYPos+(spacer+5)*++offSet),
+                dotPosition: '1010,850'
+            }];
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+
+            console.log("Screen two config 2 ",messages);   //To show later
+
+            helpOvly.onClick(three);
+
+            // T.start("two"); 
+        }
+        function three() {
+            // T.start("three");
+            // T.start('tracker');
+
+            var messages = [{
+                title: "Lines",
+                text: "Lines can come off the left side...",
+                textPosition: '790,580',
+                dotPosition: '737,622'
+            },{
+                text: "Or the right. It's automatic\n"+
+                      "based on the dot's position.",
+                textPosition: '715,660',
+                dotPosition: '1050,700'
+            }]
+
+            helpOvly.setTitleStyle('30pt Palatino','blue');
+            helpOvly.setTextStyle('15pt Helvetica', 'white');
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+            helpOvly.onClick(four);
+
+            console.log("Screen three ",messages);  //To show later
+
+            // T.end("three");
+        }
+        function four() {
+            // T.start("four");
+            // T.start('tracker');
+
+            // helpOvly.clear();
+
+            var el = $('.genericElement>pre')[0];
+            var firstXPos = 295;
+            var firstYPos = 475;
+            var textSize = 10;
+            var offSet = 1;
+            var spacer = 25;
+            var messages = [{
+                title: "Target Options",
+                textPosition:firstXPos+',455',
+            },{
+                text: "You can define a point on the screen",
+                textPosition: firstXPos+","+(firstYPos+spacer*offSet++),
+                dotPosition: '225,555'
+            },{
+                text: "Or give the config a DOM element.",
+                textPosition: (firstXPos+25)+","+(firstYPos+spacer*offSet++),
+                element: el
+            },{
+                text: "Or use a selector",
+                textPosition: (firstXPos+50)+","+(firstYPos+spacer*offSet++),
+                element: '.youCanCatchMe'
+            }];
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+            helpOvly.onClick(five);
+
+            console.log("Screen four ",messages);   //To show later
+
+            // T.end("four");
+        }
+        function five() {
+            // T.start("five");
+            // T.start('tracker');
+
+            var messages = [{
+                title: "Responsiveness",
+                text: "The CHS is somewhat responsive. If \n"+
+                      "you change the size of your browser, \n"+
+                      "you will see the lines adjusting for \n"+
+                      "the items that were assigned an el\n"+
+                      "instead of a dotPosition",
+                textPosition: "165,200"
+            },{
+                title: "Using 'element'",
+                text: "Because the dot is fixed to the element, \n"+
+                      "the dot moves with the element",
+                textPosition: '250,500',
+                element: '.genericElement>pre'
+            },{
+                title: "A fixed dot",
+                text: "When using 'dotPosition', \n"+
+                      "the dot will not move when \n"+
+                      "the window resizes",
+                textPosition: '1320, 390',
+                dotPosition: '1162,525'
+            }];
+
+            helpOvly.clear();
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+            helpOvly.onClick(end);
+
+            console.log("Screen five ",messages);
+
+            // T.end("five");
+        }
+
+        function end() {
+            // T.start("end");
+            // T.start('tracker');
+
+            var halfWidth = $(window).width()/2,
+                halfHeight = $(window).height()/2,
+                fontWeight = 30,
+                firstXPos = halfWidth,
+                firstYPos = halfHeight - fontWeight*4,
+                spacer = 20,
+                offSet = 1;
+
+            var messages = [{
+                title: "Thank you",
+                text: "I hope it made sense.\n"+
+                      "If not, feel free to\n"+
+                      "click the start button again.",
+                textPosition: firstXPos+","+firstYPos,
+                alignment: 'center'
+            }];
+            console.log("end screen",messages);     //To show later
+
+            helpOvly.setTitleStyle('30pt Bookman','rgb(120,40,17)');
+            helpOvly.setTextStyle("15pt Helvetica",'rgb(255,255,255)');
+            helpOvly.clear();
+            helpOvly.replaceConfig(messages);
+            helpOvly.render();
+            helpOvly.showCanvas();
+            helpOvly.onClick(helpOvly.hideCanvas);
+
+            // T.end("end");
+
+            // T.display();
+        }
+
+        function roundedRect(ctx,x,y,width,height,radius){
+          ctx.beginPath();
+          ctx.moveTo(x,y+radius);
+          ctx.lineTo(x,y+height-radius);
+          ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
+          ctx.lineTo(x+width-radius,y+height);
+          ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+          ctx.lineTo(x+width,y+radius);
+          ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
+          ctx.lineTo(x+radius,y);
+          ctx.quadraticCurveTo(x,y,x,y+radius);
+          ctx.stroke();
+        }
+
+        function randomCssClasses() {
+            var colors = ['#B6B6FF','#FF8BB0','#D2FFAA','#C1FF8B','#FFEAAA','#FFE28B'],
+                classes = "",
+                divs = "",
+                builder, pos,
+                maxDim = 80,
+                minDim = 20;
+
+            for(var i = 0; i < 150; ++i) {
+                pos = getXYPos();
+                builder = ".config"+ i + " {\n"
+                +"\ttop:"+pos.top+"px;\n"
+                +"\tleft:"+pos.left+"px;\n"
+                +"\tbackground-color:"+colors[Math.floor(Math.random()*colors.length)]+";\n"
+                +"\tposition: fixed;\n"
+                +"\twidth:"+(Math.floor(Math.random() * maxDim)+minDim)+"px;\n"
+                +"\theight:"+(Math.floor(Math.random() * maxDim)+minDim)+"px;\n"
+                +"}\n\n";
+                classes += builder;
+
+                builder = "<div class='randomBox config"+i+"'>&nbsp;</div>";
+                $(builder).appendTo("#randomsDiv");
             }
-            .theBox p {
-                margin: 40% 0;
+            $("<style type='text/css'>"+classes+"</style>").appendTo("head");
+        }
+        function getXYPos() {
+            var maxW = $(window).width(),
+                maxH = $(window).height();
+
+            return {
+                top : Math.floor(Math.random() * maxH), 
+                left: Math.floor(Math.random() * maxW)
             }
-            .fixedEl {
-                position: fixed;
-                width: 100px;
-                height: 100px;
-                text-align: center;
-                vertical-align: middle;
-                background-color: rgb(100, 159, 100);
-                display: table;
-                top: 75px;
-                left: 100px;
-            }
-            .fixedEl p {
-                margin: 30% 0;
-            }
-            .absEl {
-                position: absolute;
-                width: 70px;
-                height: 130px;
-                text-align: center;
-                vertical-align: middle;
-                background-color: rgb(159, 100, 100);
-                display: table;
-                top: 300px;
-                left: 275px;
-            }
-            .absEl p {
-                margin: 30% 0;
-            }
-            html {
-                height: 100%;
-            }
-            body {
-                height: 100%;
-                margin: 0;
-            }
-        </style>
-    </head>
-    <body onload="start()">
-        <button class="startBtn" onclick="startHS()">Start!</button>
-        <div class="theBox"><p>This is <br/>the box</p></div>
-        <div class="fixedEl"><p>This is a <br/> fixed element</p></div>
-        <div class="absEl"><p>This is an <br/> absolute element</p></div>
-    </body>
-    <!-- SCRIPTS -->
-    <script type="text/javascript">
-        function start () {
-            tester= new Tester();
         }
     </script>
+
+    <style type="text/css">
+    /*
+        purple: #B6B6FF;
+        pink: #FF8BB0;
+        green: #D2FFAA or #C1FF8B;
+        yellow: #FFEAAA or #FFE28B;
+    */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        pre, div.border1{
+            border: 1px solid #000;
+        }
+        .configOne>pre {
+            top:310px;
+            left:650px;
+            background-color: #B6B6FF;
+            position: fixed;
+            font-family:"Courier New", Times, serif;
+            margin: 5px;
+        }
+        .beginning {
+            text-align: center;
+            font-family:"Times New Roman", Times, serif;
+            font-size: 40pt;
+            margin-top: 100px;
+            z-index: 1;
+        }
+        .beginning>button {
+            font-family:"Times New Roman", Times, serif;
+            font-size: 30pt;
+            z-index: 1;
+        }
+        .genericElement>pre {
+            top:71%;
+            left:16%;
+            background-color: #D2FFAA;
+            position: fixed;
+            font-family:"Courier New", Times, serif;
+            margin: 5px;
+        }
+        .youCanCatchMe {
+            top: 758px;
+            left: 768px;
+            background-color: #FF8BB0;
+            position: fixed;
+            padding: 10px;
+            text-align: center;
+        }
+        .dotPos {
+            top: 555px;
+            left: 108px;
+            background-color: #FF8BB0;
+            position: fixed;
+            padding: 10px;
+        }
+        .justTitle {
+            top: 707px;
+            left: 1219px;
+            background-color: #FF8BB0;
+            position: fixed;
+            padding: 9px;
+            height: 25px;
+            text-align: center;
+            width: 100px;
+        }
+        .justText {
+            top: 848px;
+            left: 974px;
+            background-color: #B6B6FF;
+            position: fixed;
+            padding: 10px;
+            height: 20px;
+            text-align: center;
+            width: 152px;
+        }
+        .fontsNColors {
+            top: 50%;
+            left: 67%;
+            background-color: #C1FF8B;
+            padding: 15px;
+            position: fixed;
+            text-align: center;
+        }
+        .diffText {
+            top: 303px;
+            left: 1073px;
+            background-color: #FF8BB0;
+            padding: 10px;
+            position: fixed;
+            width: 60px;
+        }
+        .left {
+            top: 600px;
+            left: 632px;
+            background-color: #FFEAAA;
+            padding: 10px;
+            position: fixed;
+            text-align: center;
+            width: 86px;
+        }
+        .right {
+            top: 683px;
+            left: 1050px;
+            background-color: #FFEAAA;
+            padding: 10px;
+            position: fixed;
+        }
+
+        .randomBox {
+            z-index: -1;
+            border: 1px solid #FFFFFF;
+        }
+    </style>
+
+    <body onload="randomCssClasses()">
+        <div class="beginning">
+            Feeling a little bit lost?<br/>Push the button below to<br/>
+            <button onclick="startTutorial()">Start the Tutorial</button>
+        </div>
+        <div class="configOne"><pre>
+
+  {
+    title: "Welcome to the Canvas",  
+    textPosition: "300,600",
+    alignment: 'center'
+  },{
+    title: "Help Screen Tutorial",
+    text: "(click to continue)",
+    textPosition: "300,650",
+    alignment: 'center'
+  }
+        </pre></div>
+        <div class="genericElement"><pre>
+
+  el = $('.genericElement'),
+  config = {
+    text: "You can use an element",  
+    textPosition: '200,250',  
+    element: el
+  };
+        </pre></div>
+        <div class="youCanCatchMe border1">The dot is centered when<br>you target an element</div>
+        <div class='dotPos border1'>The top right<br>corner of this<br>div is (225,555) </div>
+        <div class="justTitle border1">Just a title</div>
+        <div class="justText border1"> Just text here</div>
+        <div class="fontsNColors border1">Fonts<br>and<br>Colors</div>
+        <div class="diffText border1">Title and<br>body text</div>
+        <div class="left border1">Left</div>
+        <div class="right border1">Right</div>
+
+        <div id="randomsDiv"><div>
+    </body>
 </html>
