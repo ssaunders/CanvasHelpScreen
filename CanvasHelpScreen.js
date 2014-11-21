@@ -636,6 +636,22 @@ HelpScreen = function(objectList, config) {
             rerender = true;
             return this;
         },
+        getSettings : function() {
+            return {
+                titleFont       : titleFont,
+                titleColor      : titleColor,
+                textFont        : textFont,
+                textColor       : textColor,
+                boxShadowColor  : boxShadowColor,
+                shadowColor     : shadowColor,
+                showCloseButton : showCloseButton,
+                lineStyle       : lineStyle,
+                lineColor       : lineColor,
+                closeBtnPos     : {x:closeButton.x, y:closeButton.y},
+                showCloseButton : showCloseButton,
+                showBoxShadow   : showBoxShadow
+            };
+        },
 
         getContext : function () {
             return context;
