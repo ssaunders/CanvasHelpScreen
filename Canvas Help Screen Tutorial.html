@@ -10,8 +10,8 @@
         function startTutorial() {
             // T.start('startTutorial');
             // T.start('tracker');
-            var halfWidth = $.viewportW()/2,
-                halfHeight = $.viewportH()/2,
+            var halfWidth = $(window).width()/2,
+                halfHeight = $(window).height()/2,
                 fontWeight = 30;
             var messages = [{
                 title: "Welcome to the Canvas",
@@ -243,8 +243,8 @@
             // T.start("end");
             // T.start('tracker');
 
-            var halfWidth = $.viewportW()/2,
-                halfHeight = $.viewportH()/2,
+            var halfWidth = $(window).width()/2,
+                halfHeight = $(window).height()/2,
                 fontWeight = 30,
                 firstXPos = halfWidth,
                 firstYPos = halfHeight - fontWeight*4,
@@ -293,7 +293,8 @@
                 classes = "",
                 divs = "",
                 builder, pos,
-                maxEl = 80;
+                maxDim = 80,
+                minDim = 20;
 
             for(var i = 0; i < 150; ++i) {
                 pos = getXYPos();
@@ -302,8 +303,8 @@
                 +"\tleft:"+pos.left+"px;\n"
                 +"\tbackground-color:"+colors[Math.floor(Math.random()*colors.length)]+";\n"
                 +"\tposition: fixed;\n"
-                +"\twidth:"+(Math.floor(Math.random() * maxEl)+20)+"px;\n"
-                +"\theight:"+(Math.floor(Math.random() * maxEl)+20)+"px;\n"
+                +"\twidth:"+(Math.floor(Math.random() * maxDim)+minDim)+"px;\n"
+                +"\theight:"+(Math.floor(Math.random() * maxDim)+minDim)+"px;\n"
                 +"}\n\n";
                 classes += builder;
 
@@ -313,24 +314,13 @@
             $("<style type='text/css'>"+classes+"</style>").appendTo("head");
         }
         function getXYPos() {
-            var maxW = $.viewportH(),
-                maxH = $.viewportW(),
-                xPos = (Math.floor(Math.random() * maxW)),
-                yPos = (Math.floor(Math.random() * maxH)),
-                topLeft = {x: 540,y: 83},
-                bottomRight = {x: 1120,y: 570};
+            var maxW = $(window).width(),
+                maxH = $(window).height();
 
-// console.log("x ",xPos > topLeft.x," && ", xPos < bottomRight.x," y ",yPos < topLeft.y," && ",yPos > bottomRight.y," end: ",xPos > topLeft.x && xPos < bottomRight.x
-//                  && yPos > topLeft.y && yPos < bottomRight.y);
-
-            // while (xPos > topLeft.x && xPos < bottomRight.x
-            //      && yPos > topLeft.y && yPos < bottomRight.y) {
-
-            //  xPos = (Math.floor(Math.random() * maxW));
-            //  yPos = (Math.floor(Math.random() * maxH));
-            // }
-
-            return {top:xPos, left: yPos}
+            return {
+                top : Math.floor(Math.random() * maxH), 
+                left: Math.floor(Math.random() * maxW)
+            }
         }
     </script>
 
